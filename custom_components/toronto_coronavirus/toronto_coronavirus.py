@@ -24,22 +24,26 @@ def get_cases():
     # Download and save the TPH COVID-19 spreadsheet
     # download_file_from_google_drive(TPH_CORONAVIRUS_FILEID, os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME))
 
-    # Convert the XLSX file to JSON.
-
-    data = pandas.read_excel(
+    total_cases = pandas.read_excel(
         os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
-        sheet_names=["Total Cases", "Cases by Outcome", "Cumulative Cases by Episode Dat"]
+        sheet_name="Total Cases"
     )
 
-    # for sheet in data:
-    #     # replacing blank spaces with '_' in column headers
-    #     sheet.columns = [column.replace(" ", "_") for column in sheet.columns] 
+    cases_by_outcome = pandas.read_excel(
+        os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
+        sheet_name="Cases by Outcome"
+    )
+
+    cases_by_episode_date = pandas.read_excel(
+        os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
+        sheet_name="Cumulative Cases by Episode Dat"
+    )
 
     cases = {}
 
-    cases["all"] = data["Total Cases"]["Case Count"].values[0]
-    cases["active"] = data["Cumulative Cases by Episode Dat"].query("'Measure Names' == 'Active Cases", inplace=False).values[0]
-    cases["recovered"] = data["Cases by Outcome"].query("Outcome == 'Recovered Cases", inplace=False).values[0]
-    cases["deaths"] = data["Cases by Outcome"].query("Outcome == 'Deaths", inplace=False).values[0]
+    cases["all"] = total_cases.at[0, 'Case Count']
+    cases["active"] = cases_by_episode_date.query("`Measure Names` == 'Active Cases'").reset_index().at[0, 'Case Count']
+    cases["recovered"] = cases_by_outcome.query("Outcome == 'Recovered Cases'").at[0, 'Case Count']
+    cases["deaths"] = cases_by_outcome.query("Outcome == 'Deaths'").at[0, 'Case Count']
     
     return cases
