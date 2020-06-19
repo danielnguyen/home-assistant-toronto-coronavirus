@@ -2,6 +2,8 @@ import json
 import logging
 import os
 
+import pandas
+
 from dataclasses import dataclass
 from .const import DATA_PATH
 # from .const import TPH_CORONAVIRUS_FILEID
@@ -23,36 +25,21 @@ def get_cases():
     # download_file_from_google_drive(TPH_CORONAVIRUS_FILEID, os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME))
 
     # Convert the XLSX file to JSON.
-    extract_spreadsheets_to_json(
-        os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME), 
-        DATA_PATH, 
-        sheet_names=["Cases", "Cumulative Cases by Episode Dat"]
+
+    data = pandas.read_excel(
+        os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
+        sheet_names=["Total Cases", "Cases by Outcome", "Cumulative Cases by Episode Dat"]
     )
+
+    # for sheet in data:
+    #     # replacing blank spaces with '_' in column headers
+    #     sheet.columns = [column.replace(" ", "_") for column in sheet.columns] 
 
     cases = {}
 
-    # if case_type in ['all', 'recovered', 'deaths']:
-    with open(os.path.join(DATA_PATH, "Cases.json"), "r") as summaryFile:
-        summaryData = json.load(summaryFile)
-        
-    for record in summaryData:
-        if record["Case Type"] == "All Cases":
-            cases["all"] = record["Case Count"]
-        if record["Case Type"] == "Recovered":
-            cases["recovered"] = record["Case Count"]
-        if record["Case Type"] == "Deaths":
-            cases["deaths"] = record["Case Count"]
-
-    with open(os.path.join(DATA_PATH, "Cumulative Cases by Episode Dat.json"), "r") as episodicCasesFile:
-        episodicCasesData = json.load(episodicCasesFile)
-
-    found=False
-    i = 1
-    while not found and i < len(episodicCasesData):
-        record = episodicCasesData[i]
-        if record["Measure Names"] == "Active Cases":
-            found=True
-            cases["active"] = record["Measure Values"]
-        i += 1
+    cases["all"] = data["Total Cases"]["Case Count"].values[0]
+    cases["active"] = data["Cumulative Cases by Episode Dat"].query("'Measure Names' == 'Active Cases", inplace=False).values[0]
+    cases["recovered"] = data["Cases by Outcome"].query("Outcome == 'Recovered Cases", inplace=False).values[0]
+    cases["deaths"] = data["Cases by Outcome"].query("Outcome == 'Deaths", inplace=False).values[0]
     
     return cases
