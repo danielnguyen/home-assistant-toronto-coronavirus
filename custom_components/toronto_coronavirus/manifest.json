@@ -1,8 +1,8 @@
 {
   "domain": "toronto_coronavirus",
   "name": "Toronto Coronavirus Tracker",
-  "documentation": "https://github.com/danielnguyen/home-assistant-toronto-covid19",
-  "issue_tracker": "https://github.com/danielnguyen/home-assistant-toronto-covid19/issues",
+  "documentation": "https://github.com/danielnguyen/home-assistant-toronto-coronavirus",
+  "issue_tracker": "https://github.com/danielnguyen/home-assistant-toronto-coronavirus/issues",
   "dependencies": [],
   "config_flow": true,
   "codeowners": [

@@ -3,7 +3,7 @@ DOMAIN = 'toronto_coronavirus'
 DOMAIN_DATA = '{}_data'.format(DOMAIN)
 VERSION = '0.0.1'
 REQUIRED_FILES = ['sensor.py', 'const.py', 'toronto_coronavirus.py']
-ISSUE_URL = 'https://github.com/danielnguyen/home-assistant-toronto-covid19/issues'
+ISSUE_URL = 'https://github.com/danielnguyen/home-assistant-toronto-coronavirus/issues'
 PLATFORMS = ['sensor']
 
 DATA_PATH = "/data"

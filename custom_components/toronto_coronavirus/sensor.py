@@ -1,7 +1,7 @@
 """
 A component which pulls down the daily Toronto Public Health COVID-19 updates.
 For more details about this component, please refer to the documentation at
-https://github.com/danielnguyen/home-assistant-toronto-covid19
+https://github.com/danielnguyen/home-assistant-toronto-coronavirus
 """
 import datetime
 import logging
@@ -27,7 +27,7 @@ SENSORS = {
 
 DEFAULT_SCAN_INTERVAL = timedelta(hours=1)
 SCAN_INTERVAL = timedelta(hours=1)
-COMPONENT_REPO = "https://github.com/danielnguyen/home-assistant-toronto-covid19/"
+COMPONENT_REPO = "https://github.com/danielnguyen/home-assistant-toronto-coronavirus/"
 
 # Configure and add devices
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
