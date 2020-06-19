@@ -21,9 +21,7 @@ def get_cases():
         "deaths": 5,
     }
     """
-    # Download and save the TPH COVID-19 spreadsheet
-    # download_file_from_google_drive(TPH_CORONAVIRUS_FILEID, os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME))
-
+    
     total_cases = pandas.read_excel(
         os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
         sheet_name="Total Cases"
