@@ -63,7 +63,7 @@ class TorontoCoronavirusSensor(Entity):
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement."""
-        return "people"
+        return "cases"
 
     async def async_update(self):
         """Update the sensor."""
