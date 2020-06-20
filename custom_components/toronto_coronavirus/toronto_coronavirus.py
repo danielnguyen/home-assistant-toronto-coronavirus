@@ -19,10 +19,10 @@ def get_cases():
     }
     """
 
-    total_cases = pandas.read_excel(
-        os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
-        sheet_name="Total Cases"
-    )
+    # total_cases = pandas.read_excel(
+    #     os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
+    #     sheet_name="Total Cases"
+    # )
 
     cases_by_outcome = pandas.read_excel(
         os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
@@ -36,7 +36,8 @@ def get_cases():
     
     cases = {}
 
-    cases["all"] = total_cases.at[0, 'Case Count']
+    # cases["all"] = total_cases.at[0, 'Case Count']
+    cases["all"] = cases_by_outcome.query("Outcome == 'All Cases'").reset_index().at[0, 'Case Count']
     cases["active"] = cases_by_episode_date.query("`Measure Names` == 'Active Cases'").reset_index().at[0, 'Case Count']
     cases["recovered"] = cases_by_outcome.query("Outcome == 'Recovered Cases'").reset_index().at[0, 'Case Count']
     cases["deaths"] = cases_by_outcome.query("Outcome == 'Deaths'").reset_index().at[0, 'Case Count']
