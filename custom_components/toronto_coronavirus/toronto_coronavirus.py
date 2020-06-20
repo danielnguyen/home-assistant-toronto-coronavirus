@@ -6,10 +6,7 @@ import pandas
 
 from dataclasses import dataclass
 from .const import DATA_PATH
-# from .const import TPH_CORONAVIRUS_FILEID
 from .const import TPH_CORONAVIRUS_XLSX_FILENAME
-from .helpers import download_file_from_google_drive
-from .helpers import extract_spreadsheets_to_json
 
 def get_cases():
     """
@@ -21,7 +18,7 @@ def get_cases():
         "deaths": 5,
     }
     """
-    
+
     total_cases = pandas.read_excel(
         os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
         sheet_name="Total Cases"
