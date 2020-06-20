@@ -33,12 +33,12 @@ def get_cases():
         os.path.join(DATA_PATH, TPH_CORONAVIRUS_XLSX_FILENAME),
         sheet_name="Cumulative Cases by Episode Dat"
     )
-
+    
     cases = {}
 
     cases["all"] = total_cases.at[0, 'Case Count']
     cases["active"] = cases_by_episode_date.query("`Measure Names` == 'Active Cases'").reset_index().at[0, 'Case Count']
-    cases["recovered"] = cases_by_outcome.query("Outcome == 'Recovered Cases'").at[0, 'Case Count']
-    cases["deaths"] = cases_by_outcome.query("Outcome == 'Deaths'").at[0, 'Case Count']
+    cases["recovered"] = cases_by_outcome.query("Outcome == 'Recovered Cases'").reset_index().at[0, 'Case Count']
+    cases["deaths"] = cases_by_outcome.query("Outcome == 'Deaths'").reset_index().at[0, 'Case Count']
     
     return cases
